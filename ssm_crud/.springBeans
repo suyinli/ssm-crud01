@@ -10,7 +10,6 @@
 		<config>src/main/resources/applicationContext.xml</config>
 		<config>src/main/webapp/WEB-INF/springDispatcherServlet-servlet.xml</config>
 		<config>WebContent/WEB-INF/springDispatcherServlet-servlet.xml</config>
-		<config>src/main/resources/mybatis-config.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

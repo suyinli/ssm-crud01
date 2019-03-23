@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-
-
-</beans>
+<!DOCTYPE configuration  PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-config.dtd"> 
+ <configuration>
+ 	
+ 	<!-- 设置全局文件 -->
+ 	<settings>
+ 		<!-- 设置驼峰命名规则 -->
+ 		<seting name="mapUnderscoreToCameCase" value="true"> </seting>
+ 	</settings>
+ 	<typeAliases>
+ 		<!-- 设置别名方便引用 -->
+ 		<package name="com.su.crud.entity">
+ 		
+ 		</package>
+ 	</typeAliases>
+ 	
+ </configuration>

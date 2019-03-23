@@ -96,7 +96,13 @@
 			<scope>test</scope>
 		</dependency>
 
-
+		<!-- mybatis的逆向工程实现数据库和entity层的连接的接口的开发 -->
+		<!-- https://mvnrepository.com/artifact/org.mybatis.generator/mybatis-generator-core -->
+		<dependency>
+			<groupId>org.mybatis.generator</groupId>
+			<artifactId>mybatis-generator-core</artifactId>
+			<version>1.3.5</version>
+		</dependency>
 
 
 	</dependencies>
