@@ -17,8 +17,7 @@
 	<!-- 让spring不扫描控制器 -->
 	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
-	
-	
+
 	<!-- 数据源， context:property-placeholder ，加载数据库的文件-->
 	<context:property-placeholder location="classpath:dbconfig.properties"/>
 	<bean id="comboPooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"><!--配置数据库连接池 -->
@@ -28,26 +27,36 @@
 		<property name="password" value="${jdbc.password}"></property>	<!-- 密码 -->
 	</bean>
 	
+	<bean id="emPloyeeSerivice" class="com.su.crud.service.EmployeeService">
+	</bean>
 	
 	<!-- 配置与mybatis的整合 -->
 	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
 		
 		<!-- 指定mybaits的全局配置文件的位置 -->
-		<property name="configLocation" value=""></property>
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
 		
 		<!-- 数据源 -->
 		<property name="dataSource" ref="comboPooledDataSource"></property>
 		
 		<!-- mybatis映射文件的位置 -->
-		<property name="mapperLocations" value="classpath:mapper/*xml"></property>
+		<property name="mapperLocations" value="classpath:mapper/*.xml"></property>
 	</bean>
 	
 	
-	<!-- 配置扫描器，将mybatis的接口的实现加入到Ioc -->
+	<!-- 配置扫描器,将mybatis 的接口的实现加入到Ioc -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 	
-	<!-- 扫面所有的dao接口的实现，加入到ioc容器，动态代理的方式，调用接口的映射等，，之前学的 -->
+	<!-- 扫面所有的 dao  接口的实现，加入到ioc容器 动态代理的方式， 用接口的映射等，，之前学的  -->
 	<property name="basePackage" value="com.su.crud.dao"></property>
+	</bean>
+	
+	
+	<!-- 配置可以执行批量操作的sqlsession -->
+	<bean  id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactoryBean"></constructor-arg>
+		<constructor-arg name="executorType" value="BATCH"><!-- 默认产生seqsession不是批量，改成批量 --></constructor-arg>
+		
 	</bean>
 	
 	<!-- 配置事务控制 -->
@@ -60,22 +69,25 @@
 	<!-- 配置好事务之后就要开启基于注解的事务，或者基于xml形式的配置方式的事务（本项目使用） -->
 	<aop:config>
 		<!-- 切入点表达式 -->
-		<aop:pointcut expression="execution(* com.su.crud.service..*(..)))" id="txPoint"/>
+		<aop:pointcut expression="execution(public * com.su.crud.service..*(..)))" id="txPoint"/>
 		<!--                                 *代表返回任意类型。      ..表示该包以及子包下的*任意方法 ，..表示任意多的参数 
-												service下的所有方法都来控制事务
+												service下的所有方法都来控制事务（颜群：以上方法都作为切入点）
+												在*（..）在参数表达式中，只要写参数的类型（全类名），不写参数的名字
 		-->
 		<!--  配置事务增强 -->
+		<!-- 连接切入点和切面的线 -->
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint"/><!-- 事务用txAdvice指定的规则切入, 用txPoint指定的方法切入 -->
 	</aop:config>
 	
 	
-		<!-- 配置事务增强,即事务如何切入 -->
+		<!-- 配置事务增强,即事务如何切入 切面以何种方式切入切入点 -->
 		<tx:advice id="txAdvice" transaction-manager="transactionManager">
 			<tx:attributes>
 				<!-- 所有方法都是事务方法 -->
 				<tx:method name="*"/>
 				<!-- 假如所有的get开始的方法都是只读，可以设置read-only只读 -->
-				<tx:method name="get" read-only="true"/>
+				<tx:method name="get*" read-only="true"/>
+			
 			</tx:attributes>
 		</tx:advice>
 	

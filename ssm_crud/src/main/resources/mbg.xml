@@ -18,7 +18,7 @@
     </javaTypeResolver>
 
 
-	<!-- 指定javabean生成的位置f -->
+	<!-- 指定javabean javaentity 生成的位置f -->
     <javaModelGenerator
      targetPackage="com.su.crud.entity"
      targetProject=".\src\main\java">

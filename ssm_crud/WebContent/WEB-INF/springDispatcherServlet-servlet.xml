@@ -2,9 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
 	<!-- springmvc的配置文件，包含网站跳转的配置 ，控制-->
@@ -17,8 +15,6 @@
 	</context:component-scan>
 	
 	
-	
-	
 	<!-- 2配置视图解析器，方便页面返回信息 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/"></property>
@@ -26,19 +22,4 @@
 	</bean>
 	
 	
-	<!--3增加两个标准的配置 -->
-	<!-- 3.1 将springmvc不能处理的请求交给tomcat处理 -->
-	<mvc:default-servlet-handler/>
-		<!-- 在springMVC-servlet.xml中配置<mvc:default-servlet-handler />后，会在Spring MVC上下文中定义一个
-			org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler，
-			它会像一个检查员，对进入DispatcherServlet的URL进行筛查，如果发现是静态资源的请求
-			就将该请求转由Web应用服务器默认的Servlet处理，如果不是静态资源的请求，
-			才由DispatcherServlet继续处理
-		 -->
-	<!-- 3.2能支持springmvc更高级的功能，例如JSR303校验，快捷的ajax... 映射动态请求-->
-	<mvc:annotation-driven/>
-	
-	
-	
 </beans>
-

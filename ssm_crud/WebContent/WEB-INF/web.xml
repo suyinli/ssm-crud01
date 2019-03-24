@@ -5,6 +5,7 @@
 	version="2.5">
 	
 	<!-- 1，项目已启动就启动spring的容器 -->
+	
 	<!-- needed for ContextLoaderListener -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
@@ -17,15 +18,16 @@
 	</listener>
 	
 	
+	
 	<!-- 2.配置springmvc的前段控制器 ，拦截所有请求-->
 	<!-- The front controller of this Spring Web application, responsible for handling all application requests -->
 	<servlet>
 		<servlet-name>springDispatcherServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<init-param>
-			<param-name>contextConfigLocation</param-name><!-- 配置springmvc的路径 -->
-			<param-value>classpath:/main/webapp/WEB-INF/springDispatcherServlet-servlet.xml</param-value>				<!-- 指定该路径的位置 也可以不指定，不指定的话，就要放在web.xml同级的目录下，创建一个和servetname-servlet.xml相同的文件-->
-		</init-param>										<!-- 意思是init-param可以去掉 -->
+	<!--  <init-param> -->	
+	<!--		<param-name>contextConfigLocation</param-name>--> <!-- 配置springmvc的路径 -->
+	<!--		<param-value>classpath:/main/webapp/WEB-INF/springDispatcherServlet-servlet.xml</param-value>	-->			<!-- 指定该路径的位置 也可以不指定，不指定的话，就要放在web.xml同级的目录下，创建一个和servetname-servlet.xml相同的文件-->
+	<!--	</init-param>					-->					<!-- 意思是init-param可以去掉 -->
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
@@ -34,6 +36,7 @@
 		<servlet-name>springDispatcherServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
 	
 	
 	

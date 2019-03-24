@@ -13,6 +13,18 @@
     <result column="email" jdbcType="CHAR" property="email" />
     <result column="d_id" jdbcType="INTEGER" property="dId" />
   </resultMap>
+  <resultMap id="DeptResultMap" type="com.su.crud.entity.Employee">
+  	<id column="emp_id" jdbcType="INTEGER" property="empId" />
+    <result column="emp_name" jdbcType="CHAR" property="empName" />
+    <result column="gender" jdbcType="CHAR" property="gender" />
+    <result column="email" jdbcType="CHAR" property="email" />
+    <result column="d_id" jdbcType="INTEGER" property="dId" />
+    <association property="department" javaType="com.su.crud.entity.Department">
+    	<id column="dept_id" property="deptId" />
+    	<result column="dept_name" property="deptName" />
+    </association>
+  </resultMap>
+  
   <sql id="Example_Where_Clause">
     <!--
       WARNING - @mbg.generated
@@ -89,6 +101,35 @@
     -->
     emp_id, emp_name, gender, email, d_id
   </sql>
+  
+  <sql id="Dept_Column_list">
+  	
+  	 emp_id, emp_name, gender, email, d_id , dept_id ,dept_name
+  </sql>
+  
+  
+  <select id="selectByExampleWithDept" parameterType="com.su.crud.entity.EmployeeExample" resultMap="DeptResultMap">
+  	select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Dept_Column_list" />
+    from tbl_emp left join tbl_dept on tbl_emp.d_id=tbl_dept.dept_id
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKeyWithDept"  parameterType="java.lang.Integer" resultMap="DeptResultMap" >
+  	select 
+    <include refid="Base_Column_List" />
+        from tbl_emp left join tbl_dept on tbl_emp.'d_id'=tbl_dept.'dept_id'
+    where emp_id = #{empId,jdbcType=INTEGER}
+  </select>
+  
+  
   <select id="selectByExample" parameterType="com.su.crud.entity.EmployeeExample" resultMap="BaseResultMap">
     <!--
       WARNING - @mbg.generated
